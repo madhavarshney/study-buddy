@@ -38,10 +38,7 @@ function App() {
           path="/queue/:classCode"
           element={<Queue userId={userId} socket={socket} />}
         />
-        <Route
-          path="/testsignup"
-          element={<TestSignup />}
-        />
+        <Route path="/testsignup" element={<TestSignup />} />
       </Routes>
     </Router>
   )
