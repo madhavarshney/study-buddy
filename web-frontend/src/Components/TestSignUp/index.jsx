@@ -13,12 +13,13 @@ const TestSignUp = () => {
             position: 'relative',
             paddingTop: '2rem',
             width: '30rem',
+            maxWidth: '90vw',
             margin: '0 auto',
             display: 'relative',
           }}
         >
           <div>
-            <img src={MyImage} />
+            <img src={MyImage} style={{ maxWidth: '100%' }} />
           </div>
           <div>
             <h2
