@@ -1,12 +1,9 @@
 import { useContext } from 'react'
-import Logo from './Logo'
-import { UserContext } from '../../utils/contexts'
+import { Link } from 'react-router-dom'
 
-const DummyCircle = () => (
-  <div
-    style={{ width: 32, height: 32, borderRadius: '50%', background: '#ccc' }}
-  />
-)
+import { UserContext } from '../../utils/contexts'
+import IconSettings from '../icons/IconSettings'
+import Logo from './Logo'
 
 const Nav = () => {
   const user = useContext(UserContext)
@@ -21,7 +18,10 @@ const Nav = () => {
         borderBottom: 'solid 1px #ccc',
       }}
     >
-      <DummyCircle />
+      <Link to="/settings">
+        <IconSettings color="black" size={32} />
+      </Link>
+
       <Logo />
       {/* <div style={{ flex: 1, textAlign: 'center', fontWeight: 'bold' }}>
         Study Buddies

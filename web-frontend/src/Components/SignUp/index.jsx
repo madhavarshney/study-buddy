@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { GoogleLogin, GoogleLogout } from 'react-google-login'
 // import { useNavigate } from 'react-router-dom'
-import { gapi } from 'gapi-script'
 // import { Button } from '@mui/material'
 
 import blobSvg from './blob.svg'
@@ -13,84 +12,10 @@ import MyImage from './humaans2.png'
   onLogoutSuccess={logOut}
 /> */
 
-const SignUp = ({ setUserId }) => {
-  // const navigate = useNavigate()
-  const clientId = process.env.REACT_APP_CLIENT_ID
-  // const [profile, setProfile] = useState({})
-
-  useEffect(() => {
-    const initClient = () => {
-      gapi.client.init({
-        clientId: clientId,
-        scope: '',
-      })
-    }
-    gapi.load('client:auth2', initClient)
-  }, [clientId])
-
-  const onSuccess = async (res) => {
-    // event.preventDefault();
-    // setProfile(res.profileObj)
-
-    let { name, email, googleId, imageUrl } = res.profileObj
-
-    try {
-      const userData = await fetch(`/users/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          googleId,
-          profilePicture: imageUrl,
-        }),
-      }).then((r) => r.json())
-
-      const { user } = userData
-
-      console.log(user)
-
-      setUserId(user.id)
-      // navigate('/home')
-    } catch {
-      console.log('Failed to Login into Google API.....')
-    }
-  }
-
-  // const login = async () => {
-  //   let { name, email, googleId } = profile
-  //   let userData = await fetch(`/users/login`, {
-  //     method: 'post',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json',
-  //     },
-  //     body: JSON.stringify({ name, email, googleId }),
-  //   })
-
-  //   let userInfo = await userData.json()
-  //   let { user } = userInfo
-
-  //   console.log(user)
-
-  //   navigate({
-  //     pathname: '/home',
-  //     state: {
-  //       ...user,
-  //     },
-  //   })
-  // }
-
+const SignUp = ({ doLogin }) => {
   const onFailure = (err) => {
     console.log('failed to login :(', err)
   }
-
-  // if (Object.keys(profile).length > 0) {
-  //   login()
-  // }
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -126,9 +51,9 @@ const SignUp = ({ setUserId }) => {
             }}
           >
             <GoogleLogin
-              clientId={clientId}
+              clientId={process.env.REACT_APP_CLIENT_ID}
               buttonText="Sign in with Google"
-              onSuccess={onSuccess}
+              onSuccess={(res) => doLogin(res.profileObj)}
               onFailure={onFailure}
               cookiePolicy={'single_host_origin'}
               isSignedIn={true}
