@@ -6,6 +6,7 @@ const User = db.define('User', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
+    autoIncrement: true,
   },
   name: Sequelize.TEXT,
   pronouns: Sequelize.TEXT,
