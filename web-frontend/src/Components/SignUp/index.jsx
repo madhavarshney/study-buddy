@@ -10,6 +10,7 @@ import { gapi } from 'gapi-script'
 /> */}
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState({})
   const clientId = process.env.REACT_APP_CLIENT_ID
 
@@ -42,15 +43,14 @@ const SignUp = () => {
       let userInfo = await userData.json();
       let { user } = userInfo;
       console.log(user)
-      Navigate('/home', {
+      navigate({pathname: '/home',
         state: {
-          user 
-        }
-      })
+          ...user 
+        } })
     }
     catch
     {
-      console.log("Failed to fetch.....");
+      console.log("Failed to Login into Google API.....");
     }
   }
 
