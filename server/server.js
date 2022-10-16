@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 app.get("/userLogin/:googleId", asyncHandler(async (req, res) => {
   console.log(req.params.googleId)
   if (!req.params.googleId) {
-    return res.status(404).json({
+    return res.status(401).json({
       error: "GOOGLE ID failed",
       message: "Google api failed"
     })
