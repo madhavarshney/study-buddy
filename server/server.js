@@ -13,7 +13,7 @@ const { User, Class, Request } = require('./db/database')
 const app = express()
 const server = http.createServer(app)
 const io = new Server(server)
-const port = 3000
+const port = 3030
 const usersToSockets = {}
 
 app.use(bodyParser.json())
@@ -120,6 +120,17 @@ app.get('/queue', asyncHandler(async (req, res) => {
 io.on('connection', (socket) => {
   console.log('Connected to new socket')
 
+  // TODO: this is pretty hacky
+  let socketUserId = null
+
+  socket.on('disconnect', () => {
+    Request.destroy({
+      where: {
+        requesterId: socketUserId,
+      }
+    })
+  })
+
   socket.on('join-queue', async (msg, callback) => {
     if (!msg || !msg.classCode || !msg.userId)
       return callback({
@@ -129,6 +140,21 @@ io.on('connection', (socket) => {
       })
 
     usersToSockets[msg.userId] = socket;
+    socketUserId = msg.userId
+
+    const alreadyQueued = await Request.findOne({
+      where: {
+        classCode: msg.classCode,
+        requesterId: msg.userId,
+      }
+    })
+
+    if (alreadyQueued) {
+      return callback({
+        status: 'success',
+        action: 'ADDED_TO_QUEUE',
+      })
+    }
 
     const queued = await Request.findAll({ where: { classCode: msg.classCode } })
 
