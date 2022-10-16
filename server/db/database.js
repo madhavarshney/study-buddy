@@ -13,7 +13,7 @@ const User = db.define('User', {
   email: Sequelize.TEXT,
   googleId: {
     unique: true,
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
   },
   classes: Sequelize.ARRAY(Sequelize.TEXT),
 })

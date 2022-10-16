@@ -19,7 +19,7 @@ async function setupTables() {
       email: 'mo@berk',
       pronouns: 'he/him',
       classes: ['CS 61A', 'Math 54'],
-    }
+    },
   ])
 
   await Class.bulkCreate([

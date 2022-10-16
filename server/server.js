@@ -23,26 +23,37 @@ app.get('/', (req, res) => {
   res.json({ status: 'up' })
 })
 
-app.post("/userLogin", asyncHandler(async (req, res) => {
-  let { name, email, googleId } = req.body;
-  let pronouns = "male"
-  
-  const user = await User.findOne({ where: { googleId}, raw : true  })
-  if (user)
-  {
-    return res.status(200).json({user})
-  }
-  
-  const newUser = await User.create({ 
+app.post(
+  '/userLogin',
+  asyncHandler(async (req, res) => {
+    let { name, email, googleId } = req.body
+    let pronouns = 'male'
+
+    const user = await User.findOne({ where: { googleId }, raw: true })
+    if (user) {
+      return res.status(200).json({ user })
+    }
+
+    const newUser = await User.create({
       name,
       email,
       pronouns,
       googleId,
-      classes: []
-  })
+      classes: [],
+    })
 
-  return res.status(201).json({newUser})
-}))
+    return res.status(201).json({ newUser })
+  })
+)
+
+app.get(
+  '/users',
+  asyncHandler(async (req, res) => {
+    const users = await User.findAll()
+
+    return res.status(200).json(users)
+  })
+)
 
 app.post(
   '/users',
@@ -160,11 +171,13 @@ io.on('connection', (socket) => {
   let prevJoinQueue = null
 
   socket.on('disconnect', () => {
-    Request.destroy({
-      where: {
-        requesterId: socketUserId,
-      },
-    })
+    if (socketUserId) {
+      Request.destroy({
+        where: {
+          requesterId: socketUserId,
+        },
+      })
+    }
   })
 
   /**
@@ -272,7 +285,9 @@ io.on('connection', (socket) => {
   })
 
   socket.on('leave-queue', async (msg) => {
-    await Request.destroy({ where: { requesterId: msg.userId } })
+    if (msg.userId) {
+      await Request.destroy({ where: { requesterId: msg.userId } })
+    }
   })
 
   /**
