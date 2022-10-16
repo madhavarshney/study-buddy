@@ -3,6 +3,12 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { gapi } from 'gapi-script'
 
+{/* <GoogleLogout
+  clientId={clientId}
+  buttonText="Log out"
+  onLogoutSuccess={logOut}
+/> */}
+
 const SignUp = () => {
   const [profile, setProfile] = useState({})
   const clientId = process.env.REACT_APP_CLIENT_ID
@@ -54,24 +60,7 @@ const SignUp = () => {
   return (
     <>
       <h2>React Google Login</h2>
-      <br />
-      <br />
-
-      {(Object.keys(profile).length > 0) ? (
-        <div>
-          <img src={profile.imageUrl} alt="user image" />
-          <h3>User Logged in</h3>
-          <p>Name: {profile.name}</p>
-          <p>Email Address: {profile.email}</p>
-          <br />
-          <br />
-          <GoogleLogout
-            clientId={clientId}
-            buttonText="Log out"
-            onLogoutSuccess={logOut}
-          />
-        </div>
-      ) : (
+      {(Object.keys(profile).length == 0) ? (
         <GoogleLogin
           clientId={clientId}
           buttonText="Sign in with Google"
@@ -80,7 +69,7 @@ const SignUp = () => {
           cookiePolicy={'single_host_origin'}
           isSignedIn={true}
         />
-      )}
+      ) : "Please Login"}
     </>
   )
 }
