@@ -1,12 +1,26 @@
 require('dotenv').config()
 
-const { User, Class, UserClass, Request } = require('./database')
+const { User, Class, Request } = require('./database')
 
 async function setupTables() {
-  await User.sync({ force: true });
-  await Class.sync({ force: true });
-  await UserClass.sync({ force: true });
-  await Request.sync({ force: true });
+  await User.sync({ force: true })
+  await Class.sync({ force: true })
+  await Request.sync({ force: true })
+
+  await User.bulkCreate([
+    {
+      name: 'Madhav Varshney',
+      email: 'mv@gmail.com',
+      pronouns: 'he/him',
+      classes: ['CS 61A', 'Math 54'],
+    }
+  ])
+
+  await Class.bulkCreate([
+    { code: 'Math 54', title: 'Linear Algebra and Differential Equations' },
+    { code: 'CS 61A', title: 'Something Cool' },
+    { code: 'CS 61B', title: 'Software Engineering' },
+  ])
 }
 
 setupTables()

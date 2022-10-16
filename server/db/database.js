@@ -11,6 +11,7 @@ const User = db.define('User', {
   name: Sequelize.TEXT,
   pronouns: Sequelize.TEXT,
   email: Sequelize.TEXT,
+  classes: Sequelize.ARRAY(Sequelize.TEXT)
 })
 
 const Class = db.define('Class', {
@@ -21,26 +22,26 @@ const Class = db.define('Class', {
   title: Sequelize.TEXT,
 })
 
-const UserClass = db.define('UserClass', {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-  },
-  userId: {
-    type: Sequelize.INTEGER,
-    // references: {
-    //   model: 'users',
-    //   key: 'id',
-    // }
-  },
-  classCode: {
-    type: Sequelize.TEXT,
-    // references: {
-    //   model: 'class',
-    //   key: 'code',
-    // }
-  }
-})
+// const UserClass = db.define('UserClass', {
+//   id: {
+//     type: Sequelize.INTEGER,
+//     primaryKey: true,
+//   },
+//   userId: {
+//     type: Sequelize.INTEGER,
+//     // references: {
+//     //   model: 'users',
+//     //   key: 'id',
+//     // }
+//   },
+//   classCode: {
+//     type: Sequelize.TEXT,
+//     // references: {
+//     //   model: 'class',
+//     //   key: 'code',
+//     // }
+//   }
+// })
 
 const Request = db.define('Request', {
   id: {
@@ -64,4 +65,4 @@ const Request = db.define('Request', {
   description: Sequelize.TEXT
 })
 
-module.exports = { db, User, Class, UserClass, Request }
+module.exports = { db, User, Class, Request }
