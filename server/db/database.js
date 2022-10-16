@@ -12,7 +12,7 @@ const User = db.define('User', {
   pronouns: Sequelize.TEXT,
   email: Sequelize.TEXT,
   googleId: Sequelize.INTEGER,
-  classes: Sequelize.ARRAY(Sequelize.TEXT)
+  classes: Sequelize.ARRAY(Sequelize.TEXT),
 })
 
 const Class = db.define('Class', {
@@ -30,17 +30,9 @@ const Class = db.define('Class', {
 //   },
 //   userId: {
 //     type: Sequelize.INTEGER,
-//     // references: {
-//     //   model: 'users',
-//     //   key: 'id',
-//     // }
 //   },
 //   classCode: {
 //     type: Sequelize.TEXT,
-//     // references: {
-//     //   model: 'class',
-//     //   key: 'code',
-//     // }
 //   }
 // })
 
@@ -52,22 +44,15 @@ const Request = db.define('Request', {
   },
   requesterId: {
     type: Sequelize.INTEGER,
-    // references: {
-    //   model: 'users',
-    //   key: 'id',
-    // }
+    unique: true,
   },
   classCode: {
     type: Sequelize.TEXT,
-    // references: {
-    //   model: 'class',
-    //   key: 'code',
-    // }
   },
   // pendingPairId: {
   //   type: Sequelize.INTEGER,
   // },
-  description: Sequelize.TEXT
+  description: Sequelize.TEXT,
 })
 
 module.exports = { db, User, Class, Request }
