@@ -18,11 +18,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-body, button, input, select {
-  /* TODO: remove !important after customizing mui theme */
+body,
+button,
+input,
+select {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif !important;
+    'Helvetica Neue', sans-serif;
 }
 
 code {

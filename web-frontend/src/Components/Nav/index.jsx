@@ -22,7 +22,12 @@ const Nav = () => {
         <IconSettings color="black" size={32} />
       </Link>
 
-      <Logo />
+      <Link
+        to="/"
+        style={{ textDecoration: 'none', flex: 1, textAlign: 'center' }}
+      >
+        <Logo />
+      </Link>
       {/* <div style={{ flex: 1, textAlign: 'center', fontWeight: 'bold' }}>
         Study Buddies
       </div> */}

@@ -3,15 +3,34 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import io from 'socket.io-client'
 import useSWR from 'swr'
 import { gapi } from 'gapi-script'
+import { CssBaseline, createTheme, ThemeProvider } from '@mui/material'
 
 import { UserContext, SocketContext } from './utils/contexts'
 import fetcher from './utils/fetcher'
 import Home from './Components/Home'
 import Queue from './Components/Queue'
 import SignUp from './Components/SignUp'
-import Settings from './Components/Classes'
+import Settings from './Components/Settings'
 
 const socket = io()
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Source Sans Pro',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
+})
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected)
@@ -79,40 +98,47 @@ function App() {
   }, [])
 
   return (
-    <UserContext.Provider value={user}>
-      <SocketContext.Provider value={socket}>
-        <Router>
-          <Routes>
-            {/* <Route exact path="/" element={<SignUp setUserId={setUserId} />} /> */}
-            {/* <Route
-            exact
-            path="/home"
-            element={<Home userId={userId} isConnected={isConnected} />}
-          /> */}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
 
-            <Route
-              exact
-              path="/"
-              // TODO: figure out whether it is okay to do this
-              element={
-                userId ? (
-                  <Home isConnected={isConnected} />
-                ) : (
-                  <SignUp setUserId={setUserId} doLogin={doLogin} />
-                )
-              }
-            />
+      <UserContext.Provider value={user}>
+        <SocketContext.Provider value={socket}>
+          <Router>
+            <Routes>
+              {/* <Route exact path="/" element={<SignUp setUserId={setUserId} />} /> */}
+              {/* <Route
+                exact
+                path="/home"
+                element={<Home userId={userId} isConnected={isConnected} />}
+              /> */}
 
-            <Route
-              path="/queue/:classCode"
-              element={userId ? <Queue /> : <div />}
-            />
+              <Route
+                exact
+                path="/"
+                // TODO: figure out whether it is okay to do this
+                element={
+                  userId ? (
+                    <Home isConnected={isConnected} />
+                  ) : (
+                    <SignUp setUserId={setUserId} doLogin={doLogin} />
+                  )
+                }
+              />
 
-            <Route path="/settings" element={userId ? <Settings /> : <div />} />
-          </Routes>
-        </Router>
-      </SocketContext.Provider>
-    </UserContext.Provider>
+              <Route
+                path="/queue/:classCode"
+                element={userId ? <Queue /> : <div />}
+              />
+
+              <Route
+                path="/settings"
+                element={userId ? <Settings /> : <div />}
+              />
+            </Routes>
+          </Router>
+        </SocketContext.Provider>
+      </UserContext.Provider>
+    </ThemeProvider>
   )
 }
 

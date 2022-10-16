@@ -2,7 +2,7 @@ const Logo = () => (
   <div style={{ margin: '0 auto' }}>
     <div
       style={{
-        width: '14rem',
+        // width: '14rem',
         display: 'flex',
         flexDirection: 'column',
         justifyItems: 'center',
@@ -12,7 +12,7 @@ const Logo = () => (
       <h3
         style={{
           color: '#119bc0',
-          fontSize: '1.6rem',
+          fontSize: '1.4rem',
           padding: '0px',
           margin: '4px',
           fontStyle: 'italic',

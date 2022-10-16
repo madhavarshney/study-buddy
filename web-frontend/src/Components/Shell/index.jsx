@@ -18,6 +18,7 @@ const Shell = ({ children, footer }) => {
           width: '100%',
           flex: 1,
           background: '#f2f2f2',
+          overflow: 'auto',
         }}
       >
         {children}
