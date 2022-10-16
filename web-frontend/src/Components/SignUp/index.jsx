@@ -89,8 +89,6 @@ const SignUp = () => {
 
   return (
     <>
-      <h2>Google Login</h2>
-      {(Object.keys(profile).length == 0) ? (
         <GoogleLogin
           clientId={clientId}
           buttonText="Sign in with Google"
@@ -99,7 +97,6 @@ const SignUp = () => {
           cookiePolicy={'single_host_origin'}
           isSignedIn={true}
         />
-      ) : ""}
     </>
   )
 }
