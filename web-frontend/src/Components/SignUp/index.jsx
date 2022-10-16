@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { GoogleLogin, GoogleLogout } from 'react-google-login'
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { gapi } from 'gapi-script'
 
 const SignUp = () => {
-  const [profile, setProfile] = useState([])
+  const [profile, setProfile] = useState({})
   const clientId = process.env.REACT_APP_CLIENT_ID
-
+  console.log(profile)
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({
@@ -16,8 +17,30 @@ const SignUp = () => {
     gapi.load('client:auth2', initClient)
   })
 
-  const onSuccess = (res) => {
+  const onSuccess = async (res) => {
     setProfile(res.profileObj)
+
+    try {
+      let userData = await fetch(`${process.env.REACT_APP_URL}/userLogin/${profile.googleId}`, {
+        method: 'get',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }
+      })
+
+      let user = await userData.json();
+      Navigate('/home', {
+        state: {
+          user
+        }
+      })
+    }
+    catch
+    {
+      console.log("Failed to fetch.....");
+    }
   }
 
   const onFailure = (err) => {
@@ -34,7 +57,7 @@ const SignUp = () => {
       <br />
       <br />
 
-      {profile ? (
+      {(Object.keys(profile).length > 0) ? (
         <div>
           <img src={profile.imageUrl} alt="user image" />
           <h3>User Logged in</h3>

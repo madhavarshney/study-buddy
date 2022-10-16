@@ -23,6 +23,18 @@ app.get('/', (req, res) => {
   res.json({ status: 'up' })
 })
 
+app.get("/userLogin/:googleId", asyncHandler(async (req, res) => {
+  if (!req.params.googleId) {
+    return res.status.json({
+      error: "GOOGLE ID failed",
+      message: "Google api failed"
+    })
+  }
+  const user = await User.findOne({ where: { email } })
+
+  return res.status(201).json({ user });
+}))
+
 app.get('/users', asyncHandler(async (req, res) => {
   const users = await User.findAll()
 
@@ -184,7 +196,7 @@ io.on('connection', (socket) => {
     }
   })
 
-  socket.on('send-pair-request', async (msg, callback) =>  {
+  socket.on('send-pair-request', async (msg, callback) => {
     if (!msg || !msg.classCode || !msg.userId || !msg.otherUserId)
       return callback({
         status: 'error',
