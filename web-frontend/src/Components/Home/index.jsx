@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useSWR from 'swr'
 
@@ -12,10 +12,18 @@ const Home = ({ isConnected }) => {
   const user = useContext(UserContext)
 
   // TODO: handle error and loading states
-  const { data: classes, error } = useSWR(
-    user ? `/users/${user.id}/classes` : null,
-    fetcher
-  )
+  const {
+    data: classes,
+    error,
+    isLoading,
+    isValidating,
+  } = useSWR(user ? `/users/${user.id}/classes` : null, fetcher)
+
+  useEffect(() => {
+    if (classes && classes.length === 0 && !isLoading && !isValidating) {
+      navigate('/settings')
+    }
+  }, [classes])
 
   return (
     <Shell
