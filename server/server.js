@@ -23,31 +23,26 @@ app.get('/', (req, res) => {
   res.json({ status: 'up' })
 })
 
-app.get("/userLogin/:googleId", asyncHandler(async (req, res) => {
-  console.log(req.params.googleId)
-  if (!req.params.googleId) {
-    return res.status(401).json({
-      error: "GOOGLE ID failed",
-      message: "Google api failed"
-    })
+app.post("/userLogin", asyncHandler(async (req, res) => {
+  let { name, email, googleId } = req.body;
+  let pronouns = "male"
+  
+  const user = await User.findOne({ where: { googleId}, raw : true  })
+  if (user)
+  {
+    return res.status(200).json({user})
   }
-
-    const user = await User.findOne({
-      where: { googleId: req.params.googleId },
-    })
-
-    return res.status(201).json({ user })
+  
+  const newUser = await User.create({ 
+      name,
+      email,
+      pronouns,
+      googleId,
+      classes: []
   })
-)
 
-app.get(
-  '/users',
-  asyncHandler(async (req, res) => {
-    const users = await User.findAll()
-
-    return res.status(200).json(users)
-  })
-)
+  return res.status(201).json({newUser})
+}))
 
 app.post(
   '/users',

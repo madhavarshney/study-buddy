@@ -11,7 +11,10 @@ const User = db.define('User', {
   name: Sequelize.TEXT,
   pronouns: Sequelize.TEXT,
   email: Sequelize.TEXT,
-  googleId: Sequelize.INTEGER,
+  googleId: {
+    unique: true,
+    type: Sequelize.TEXT
+  },
   classes: Sequelize.ARRAY(Sequelize.TEXT),
 })
 

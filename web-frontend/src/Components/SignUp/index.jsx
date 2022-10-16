@@ -25,20 +25,26 @@ const SignUp = () => {
 
   const OnSuccess = async (res) => {
     setProfile(res.profileObj)
-
+    let { 
+      name,
+      email,
+      googleId
+    } = res.profileObj;
     try {
-      let userData = await fetch(`/userLogin/${res.profileObj.googleId}`, {
-        method: 'get',
+      let userData = await fetch(`/userLogin/`, {
+        method: 'post',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-        }
+        },
+        body: JSON.stringify({name, email, googleId})
       })
-
-      let user = await userData.json();
+      let userInfo = await userData.json();
+      let { user } = userInfo;
+      console.log(user)
       Navigate('/home', {
         state: {
-          user
+          user 
         }
       })
     }
