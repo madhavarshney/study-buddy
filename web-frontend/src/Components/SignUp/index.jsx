@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { GoogleLogin, GoogleLogout } from 'react-google-login'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import { gapi } from 'gapi-script'
 // import { Button } from '@mui/material'
 
@@ -14,7 +14,7 @@ import MyImage from './humaans2.png'
 /> */
 
 const SignUp = ({ setUserId }) => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const clientId = process.env.REACT_APP_CLIENT_ID
   // const [profile, setProfile] = useState({})
 
@@ -32,7 +32,7 @@ const SignUp = ({ setUserId }) => {
     // event.preventDefault();
     // setProfile(res.profileObj)
 
-    let { name, email, googleId } = res.profileObj
+    let { name, email, googleId, imageUrl } = res.profileObj
 
     try {
       const userData = await fetch(`/users/login`, {
@@ -41,7 +41,12 @@ const SignUp = ({ setUserId }) => {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({ name, email, googleId }),
+        body: JSON.stringify({
+          name,
+          email,
+          googleId,
+          profilePicture: imageUrl,
+        }),
       }).then((r) => r.json())
 
       const { user } = userData

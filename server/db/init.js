@@ -1,23 +1,21 @@
 require('dotenv').config()
 
 const { User, Class, Request } = require('./database')
+const berkeleyClasses = require('./berkeleyClasses.json')
 
 async function setupTables() {
   await User.sync({ force: true })
   await Class.sync({ force: true })
   await Request.sync({ force: true })
 
-  await Class.bulkCreate([
-    { code: 'Math 54', title: 'Linear Algebra and Differential Equations' },
-    { code: 'CS 61A', title: 'Something Cool' },
-    { code: 'CS 61B', title: 'Software Engineering' },
-  ])
+  await Class.bulkCreate(berkeleyClasses)
 
   await User.bulkCreate([
     {
       name: 'Madhav Varshney',
-      email: 'mv@berk',
       pronouns: 'he/him',
+      // googleId: '115816483171262773283',
+      email: 'madhavarsney@gmail.com',
       profilePicture: 'https://www.w3schools.com/howto/img_avatar2.png',
       phoneNumber: '+1 (500) 400-1600',
       instagram: '@mv_cal',
