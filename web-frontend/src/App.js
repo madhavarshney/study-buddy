@@ -8,7 +8,7 @@ import Login from './Components/Login'
 import SignUp from './Components/SignUp'
 
 const socket = io('http://localhost:3000')
-const USER_ID = '805534814819352578'
+const USER_ID = localStorage.getItem('study-buddies-user-id')
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected)
@@ -33,7 +33,10 @@ function App() {
           path="/home"
           element={<Home userId={userId} isConnected={isConnected} />}
         />
-        <Route path="/queue/:classCode" element={<Queue />} />
+        <Route
+          path="/queue/:classCode"
+          element={<Queue userId={userId} socket={socket} />}
+        />
       </Routes>
     </Router>
   )
