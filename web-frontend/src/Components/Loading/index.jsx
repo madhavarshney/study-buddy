@@ -1,6 +1,12 @@
-import "./style.css";
-export default (props) => (
-  <div style={props.style} class="stage">
-    <p class="loading loading_text">{props.children}</p>
+import './style.css'
+
+const Loading = ({ style, children }) => (
+  <div style={style} className="stage">
+    <p className="loading loading_text">
+      {children}
+      <span className="loading_dots"></span>
+    </p>
   </div>
-  );
+)
+
+export default Loading

@@ -1,10 +1,10 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import * as React from 'react'
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
 const bull = (
   <Box  
@@ -12,7 +12,7 @@ const bull = (
   >
     •
   </Box>
-);
+)
 
 const Class = (props) => {
   return (
@@ -24,12 +24,12 @@ const Class = (props) => {
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {props.code}
         </Typography>
-      </CardContent> 
+      </CardContent>
       <CardActions>
         <Button size="small">Add Class</Button>
       </CardActions>
     </Card>
-  );
+  )
 }
 
-export default Class;
+export default Class
