@@ -43,6 +43,10 @@ router.post(
       name,
       email,
       pronouns,
+      // TODO: replace default
+      profilePicture: 'https://www.w3schools.com/howto/img_avatar2.png',
+      phoneNumber: null,
+      instagram: null,
       classes: [],
     })
 
@@ -53,8 +57,7 @@ router.post(
 router.post(
   '/login',
   asyncHandler(async (req, res) => {
-    let { name, email, googleId } = req.body
-    let pronouns = 'male'
+    let { name, email, profilePicture, googleId } = req.body
 
     const user = await User.findOne({ where: { googleId }, raw: true })
 
@@ -63,10 +66,13 @@ router.post(
     }
 
     const newUser = await User.create({
+      googleId,
       name,
       email,
-      pronouns,
-      googleId,
+      pronouns: '',
+      profilePicture,
+      phoneNumber: null,
+      instagram: null,
       classes: [],
     })
 
