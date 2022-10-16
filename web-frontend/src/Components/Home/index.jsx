@@ -1,16 +1,18 @@
+import { useContext } from 'react'
 import useSWR from 'swr'
 import { useNavigate } from 'react-router-dom'
 
 import fetcher from '../../utils/fetcher'
+import { UserContext } from '../../utils/contexts'
 import Nav from '../Nav/index'
 
-const Home = ({ userId, isConnected }) => {
+const Home = ({ isConnected }) => {
   const navigate = useNavigate()
+  const user = useContext(UserContext)
 
-  // TODO: handle errors
-  const { data: user, error } = useSWR(`/users/${userId}`, fetcher)
-  const { data: classes, error: error2 } = useSWR(
-    `/users/${userId}/classes`,
+  // TODO: handle error and loading states
+  const { data: classes, error } = useSWR(
+    user ? `/users/${user.id}/classes` : null,
     fetcher
   )
 

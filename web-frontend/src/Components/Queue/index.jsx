@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react'
+import { useContext } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { SocketContext, UserContext } from '../../utils/contexts'
 import Nav from '../Nav'
 
 // TODO: get userId from context
-const Queue = ({ userId, socket }) => {
+const Queue = () => {
+  const socket = useContext(SocketContext)
+  const user = useContext(UserContext)
+
   const [currentView, setCurrentView] = useState('JOINING_QUEUE')
   const [queueUsers, setQueueUsers] = useState(null)
   const [userToPair, setUserToPair] = useState(null)
@@ -13,7 +18,7 @@ const Queue = ({ userId, socket }) => {
   const { classCode } = useParams()
 
   useEffect(() => {
-    socket.emit('join-queue', { userId, classCode }, (res) => {
+    socket.emit('join-queue', { userId: user.id, classCode }, (res) => {
       if (res.status === 'error') {
         console.log('Error with joining queue:', res)
         setCurrentView('ERROR')
@@ -43,9 +48,9 @@ const Queue = ({ userId, socket }) => {
     return () => {
       // TODO: implement everything to clean up in here
       socket.off('accept-pair-request')
-      socket.emit('leave-queue', { userId })
+      socket.emit('leave-queue', { userId: user.id })
     }
-  }, [classCode, userId, socket])
+  }, [classCode, user.id, socket])
 
   const sendPairRequest = (otherUser) => {
     setCurrentView('AWAITING_PAIR_RESPONSE')
@@ -54,7 +59,7 @@ const Queue = ({ userId, socket }) => {
     socket.emit(
       'send-pair-request',
       {
-        userId,
+        userId: user.id,
         classCode,
         otherUserId: otherUser.id,
       },
