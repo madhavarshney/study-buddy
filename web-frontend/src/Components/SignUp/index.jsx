@@ -27,9 +27,8 @@ const SignUp = () => {
     setProfile(res.profileObj)
 
     try {
-      let userData = await fetch(`${process.env.REACT_APP_URL}/userLogin/${profile.googleId}`, {
+      let userData = await fetch(`/userLogin/${res.profileObj.googleId}`, {
         method: 'get',
-        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -53,23 +52,19 @@ const SignUp = () => {
     console.log('failed to login :(', err)
   }
 
-  const LogOut = () => {
-    setProfile(null)
-  }
-
   return (
     <>
-      <h2>React Google Login</h2>
+      <h2>Google Login</h2>
       {(Object.keys(profile).length == 0) ? (
         <GoogleLogin
           clientId={clientId}
           buttonText="Sign in with Google"
-          onSuccess={onSuccess}
-          onFailure={onFailure}
+          onSuccess={OnSuccess}
+          onFailure={OnFailure}
           cookiePolicy={'single_host_origin'}
           isSignedIn={true}
         />
-      ) : "Please Login"}
+      ) : ""}
     </>
   )
 }

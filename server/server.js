@@ -24,13 +24,17 @@ app.get('/', (req, res) => {
 })
 
 app.get("/userLogin/:googleId", asyncHandler(async (req, res) => {
+  console.log(req.params.googleId)
   if (!req.params.googleId) {
-    return res.status.json({
+    return res.status(404).json({
       error: "GOOGLE ID failed",
       message: "Google api failed"
     })
   }
-  const user = await User.findOne({ where: { email } })
+
+  let googleId = req.params.googleId
+
+  const user = await User.findOne({ where: { googleId } })
 
   return res.status(201).json({ user });
 }))
