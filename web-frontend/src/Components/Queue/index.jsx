@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useContext } from 'react'
 import { useParams } from 'react-router-dom'
+import { Button } from '@mui/material'
 
 import { SocketContext, UserContext } from '../../utils/contexts'
 import Loading from '../Loading'
 import Shell from '../Shell'
+import Profile from '../Profile'
 
 // TODO: get userId from context
 const Queue = () => {
@@ -85,21 +87,11 @@ const Queue = () => {
           <h3>People to Pair</h3>
           <div style={{ gap: 16, display: 'flex', flexDirection: 'column' }}>
             {queueUsers.map((user) => (
-              <div
+              <Profile
                 key={user.id}
+                user={user}
                 onClick={() => sendPairRequest(user)}
-                style={{
-                  width: '100%',
-                  padding: '1rem 1rem',
-                  overflow: 'auto',
-                  borderRadius: 4,
-                  background: 'white',
-                  height: '80px',
-                  boxShadow: '2px 2px 4px 0 #d2d2d2',
-                }}
-              >
-                {user.name}: {user.email}
-              </div>
+              />
             ))}
           </div>
         </div>
@@ -109,31 +101,33 @@ const Queue = () => {
         </Loading>
       ) : currentView === 'RESPOND_TO_PAIR_REQUEST' ? (
         <div>
-          <div>
-            <div>{userToPair.name}</div>
-            <div>{userToPair.email}</div>
-          </div>
-          <div>
-            <button onClick={() => respondToPairRequest('accept')}>
-              Accept
-            </button>
-            <button
-              onClick={() => {
-                respondToPairRequest('reject')
-                setCurrentView('WAITING_FOR_OTHERS')
-                setUserToPair(null)
-                setRespondToPairRequest(null)
-              }}
-            >
-              Reject
-            </button>
-          </div>
+          {userToPair && (
+            <Profile user={userToPair}>
+              <Button
+                onClick={() => {
+                  respondToPairRequest('reject')
+                  setCurrentView('WAITING_FOR_OTHERS')
+                  setUserToPair(null)
+                  setRespondToPairRequest(null)
+                }}
+              >
+                Reject
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => respondToPairRequest('accept')}
+              >
+                Accept
+              </Button>
+            </Profile>
+          )}
         </div>
       ) : currentView === 'PAIRED' ? (
         <div>
-          <div>Paired Successfully! Here's how to contact your partner:</div>
-          <div>{userToPair.name}</div>
-          <div>{userToPair.email}</div>
+          <div style={{ marginBottom: '1rem' }}>
+            Paired Successfully! Here's your partner:
+          </div>
+          {userToPair && <Profile user={userToPair} />}
         </div>
       ) : (
         <div>

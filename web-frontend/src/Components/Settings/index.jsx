@@ -25,44 +25,39 @@ const Settings = () => {
 
   return (
     <Shell>
-      {/* {user && user.name} */}
+      <h3>Your Classes</h3>
 
-      <h3>Your Clases</h3>
-
-      {allClasses && (
-        <Autocomplete
-          // multiple
-          id="tags-standard"
-          options={allClasses
-            .filter(({ code }) =>
-              // TODO: this is very hacky
-              ['PHYSICS', 'ENGLISH', 'MATH', 'COMPSCI', 'PHYS'].includes(
-                code.split(' ')[0]
-              )
+      <Autocomplete
+        // multiple
+        id="tags-standard"
+        options={(allClasses || [])
+          .filter(({ code }) =>
+            // TODO: this is very hacky
+            ['PHYSICS', 'ENGLISH', 'MATH', 'COMPSCI', 'PHYS'].includes(
+              code.split(' ')[0]
             )
-            .filter(
-              ({ code }) =>
-                !editedClasses ||
-                !editedClasses.find((cls) => cls.code === code)
-            )}
-          onChange={(event, option) => {
-            console.log(option)
-            if (option.code) {
-              setEditedClasses([...editedClasses, option])
-            }
-          }}
-          getOptionLabel={(option) => `${option.code}: ${option.title}`}
-          // defaultValue={}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="outlined"
-              // label="Multiple values"
-              placeholder="Search for a class..."
-            />
+          )
+          .filter(
+            ({ code }) =>
+              !editedClasses || !editedClasses.find((cls) => cls.code === code)
           )}
-        />
-      )}
+        onChange={(event, option) => {
+          console.log(option)
+          if (option.code) {
+            setEditedClasses([...editedClasses, option])
+          }
+        }}
+        getOptionLabel={(option) => `${option.code}: ${option.title}`}
+        // defaultValue={}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="outlined"
+            // label="Multiple values"
+            placeholder="Search for a class..."
+          />
+        )}
+      />
 
       <div
         style={{
