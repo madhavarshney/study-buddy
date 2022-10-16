@@ -12,7 +12,7 @@ import { gapi } from 'gapi-script'
 const SignUp = () => {
   const [profile, setProfile] = useState({})
   const clientId = process.env.REACT_APP_CLIENT_ID
-  console.log(profile)
+
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({
@@ -23,7 +23,7 @@ const SignUp = () => {
     gapi.load('client:auth2', initClient)
   })
 
-  const onSuccess = async (res) => {
+  const OnSuccess = async (res) => {
     setProfile(res.profileObj)
 
     try {
@@ -49,11 +49,11 @@ const SignUp = () => {
     }
   }
 
-  const onFailure = (err) => {
+  const OnFailure = (err) => {
     console.log('failed to login :(', err)
   }
 
-  const logOut = () => {
+  const LogOut = () => {
     setProfile(null)
   }
 
