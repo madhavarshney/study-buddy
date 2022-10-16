@@ -25,6 +25,7 @@ const SignUp = () => {
   })
 
   const OnSuccess = async (res) => {
+    // event.preventDefault();
     setProfile(res.profileObj)
     let { 
       name,
@@ -54,8 +55,36 @@ const SignUp = () => {
     }
   }
 
+  const Login = async () => {
+    let { 
+      name,
+      email,
+      googleId
+    } = profile;
+      let userData = await fetch(`/userLogin/`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({name, email, googleId})
+      })
+      let userInfo = await userData.json();
+      let { user } = userInfo;
+      console.log(user)
+      navigate({pathname: '/home',
+        state: {
+          ...user 
+        } })
+  }
+
   const OnFailure = (err) => {
     console.log('failed to login :(', err)
+  }
+
+  if (!(Object.keys(profile).length == 0))
+  {
+    Login();
   }
 
   return (
