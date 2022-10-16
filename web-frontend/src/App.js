@@ -8,7 +8,7 @@ import fetcher from './utils/fetcher'
 import Home from './Components/Home'
 import Queue from './Components/Queue'
 import SignUp from './Components/SignUp'
-
+import AddClass from './Components/Classes/AddClass'
 const socket = io()
 
 function App() {
@@ -55,6 +55,7 @@ function App() {
                 )
               }
             />
+            <Route path="/single" element={<AddClass/> } />
             <Route path="/queue/:classCode" element={<Queue />} />
           </Routes>
         </Router>
