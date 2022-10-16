@@ -46,6 +46,7 @@ const Class = db.define('Class', {
 const Request = db.define('Request', {
   id: {
     type: Sequelize.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
   },
   requesterId: {
@@ -62,6 +63,9 @@ const Request = db.define('Request', {
     //   key: 'code',
     // }
   },
+  // pendingPairId: {
+  //   type: Sequelize.INTEGER,
+  // },
   description: Sequelize.TEXT
 })
 

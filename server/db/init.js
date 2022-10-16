@@ -10,7 +10,13 @@ async function setupTables() {
   await User.bulkCreate([
     {
       name: 'Madhav Varshney',
-      email: 'mv@gmail.com',
+      email: 'mv@berk',
+      pronouns: 'he/him',
+      classes: ['CS 61A', 'Math 54'],
+    },
+    {
+      name: 'Mokhalad',
+      email: 'mo@berk',
       pronouns: 'he/him',
       classes: ['CS 61A', 'Math 54'],
     }
