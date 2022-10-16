@@ -31,7 +31,7 @@ const SignUp = () => {
     let { name, email, googleId } = res.profileObj
 
     try {
-      let userData = await fetch(`/userLogin/`, {
+      let userData = await fetch(`/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const SignUp = () => {
 
   const login = async () => {
     let { name, email, googleId } = profile
-    let userData = await fetch(`/userLogin/`, {
+    let userData = await fetch(`/users/login`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',

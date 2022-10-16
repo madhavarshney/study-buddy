@@ -1,5 +1,9 @@
 const express = require('express')
 const router = express.Router()
+const Sequelize = require('sequelize-cockroachdb')
+const asyncHandler = require('express-async-handler')
+
+const { User, Class } = require('../db/database')
 
 router.get(
   '/',
@@ -21,7 +25,7 @@ router.post(
 
     if (!name || !email) {
       return res.status(400).json({
-        error: 'MISSING_INFORMATION',
+        error: 'MISSING_DATA',
         message: 'Name or email not provided',
       })
     }
@@ -42,7 +46,31 @@ router.post(
       classes: [],
     })
 
-    return res.status(200).json({ user })
+    return res.status(201).json({ user })
+  })
+)
+
+router.post(
+  '/login',
+  asyncHandler(async (req, res) => {
+    let { name, email, googleId } = req.body
+    let pronouns = 'male'
+
+    const user = await User.findOne({ where: { googleId }, raw: true })
+
+    if (user) {
+      return res.status(200).json({ user })
+    }
+
+    const newUser = await User.create({
+      name,
+      email,
+      pronouns,
+      googleId,
+      classes: [],
+    })
+
+    return res.status(201).json({ newUser })
   })
 )
 
@@ -52,7 +80,7 @@ router.get(
     const user = await User.findOne({ where: { id: req.params.id } })
 
     if (!user) {
-      res.status(404).json({
+      return res.status(404).json({
         error: 'NOT_FOUND',
         message: 'User not found',
       })
