@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import useSWR from 'swr'
 import { useNavigate } from 'react-router-dom'
-
 import fetcher from '../../utils/fetcher'
 import { UserContext } from '../../utils/contexts'
 import Nav from '../Nav/index'
+import MyImage from './engineering_team.png'
 
 const Home = ({ isConnected }) => {
   const navigate = useNavigate()
@@ -39,6 +39,7 @@ const Home = ({ isConnected }) => {
 
         {classes && (
           <div style={{ width: '100%' }}>
+            <img style={{ width: '400px' }} src={MyImage} />
             <h3>Choose Your Class</h3>
             <div style={{ gap: 16, display: 'flex', flexDirection: 'column' }}>
               {classes.map(({ code, title }) => (

@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-
+import Logo from './Logo'
 import { UserContext } from '../../utils/contexts'
 
 const DummyCircle = () => (
@@ -22,10 +22,10 @@ const Nav = () => {
       }}
     >
       <DummyCircle />
-
-      <div style={{ flex: 1, textAlign: 'center', fontWeight: 'bold' }}>
+      <Logo />
+      {/* <div style={{ flex: 1, textAlign: 'center', fontWeight: 'bold' }}>
         Study Buddies
-      </div>
+      </div> */}
 
       <div
         style={{
