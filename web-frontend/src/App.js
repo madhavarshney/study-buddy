@@ -6,6 +6,7 @@ import Home from './Components/Home'
 import Queue from './Components/Queue'
 import Login from './Components/Login'
 import SignUp from './Components/SignUp'
+import TestSignup from './Components/TestSignUp'
 
 const socket = io('http://localhost:3000')
 const USER_ID = localStorage.getItem('study-buddies-user-id')
@@ -36,6 +37,10 @@ function App() {
         <Route
           path="/queue/:classCode"
           element={<Queue userId={userId} socket={socket} />}
+        />
+        <Route
+          path="/testsignup"
+          element={<TestSignup />}
         />
       </Routes>
     </Router>
