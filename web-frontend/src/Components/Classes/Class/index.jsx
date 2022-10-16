@@ -7,8 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 const bull = (
-  <Box
-    component="span"
+  <Box  
     sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
   >
     •
@@ -16,7 +15,6 @@ const bull = (
 );
 
 const Class = (props) => {
-    console.log(props)
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>

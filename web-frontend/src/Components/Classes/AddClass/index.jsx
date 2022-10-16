@@ -1,15 +1,19 @@
 import Class from "../Class";
 
 const AddClass = () => {
-    // const AddClass = async () => {
+    
 
-    // }
+    const getClasses = async () => {
+        const getClasses = await fetch("classes/", {
+            
+        })   
+    }
     
     let array = [{code: "1234", title: "Linear Algebra"}, {code: "1234", title: "Linear Algebra"}, {code: "1234", title: "Linear Algebra"}]
     
     return ( <>
         {array.map((element) => {
-           return <Class props={element} />
+           return <Class {...element} />
         })}
     </> );
 }
