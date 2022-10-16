@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const { Server } = require('socket.io')
 
 const usersRouter = require('./api/users')
+const classesRouter = require('./api/classes')
 const { queueRouter, onSocketConnection } = require('./api/queue')
 
 const app = express()
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/users', usersRouter)
+app.use('/classes', classesRouter)
 app.use('/queue', queueRouter)
 
 io.on('connection', onSocketConnection)
