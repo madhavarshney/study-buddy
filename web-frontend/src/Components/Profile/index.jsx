@@ -17,7 +17,11 @@ const Profile = ({
     }}
   >
     <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-      <Avatar alt={name} href={profilePicture} referrerPolicy="no-referrer" />
+      <Avatar
+        alt={name}
+        src={profilePicture}
+        imgProps={{ referrerPolicy: 'no-referrer' }}
+      />
 
       <div style={{ flex: 1 }}>
         <div style={{ fontWeight: 'bold' }}>{name}</div>

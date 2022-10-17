@@ -1,9 +1,66 @@
-import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Avatar, Menu, MenuItem } from '@mui/material'
+import { gapi } from 'gapi-script'
+import { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { UserContext } from '../../utils/contexts'
 import IconSettings from '../icons/IconSettings'
 import Logo from './Logo'
+
+const ProfileMenu = ({ user }) => {
+  const navigate = useNavigate()
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const handleClick = (event) => setAnchorEl(event.currentTarget)
+  const handleClose = () => setAnchorEl(null)
+
+  return (
+    <div>
+      <div
+        id="profile-menu"
+        aria-controls={anchorEl ? 'profile-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={anchorEl ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        <Avatar
+          style={{ width: 32, height: 32 }}
+          src={user.profilePicture}
+          alt={user.name}
+          imgProps={{ referrerPolicy: 'no-referrer' }}
+        />
+      </div>
+
+      <Menu
+        id="profile-menu"
+        anchorEl={anchorEl}
+        open={!!anchorEl}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'profile-menu',
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            handleClose()
+            navigate('/settings')
+          }}
+        >
+          Settings
+        </MenuItem>
+
+        <MenuItem
+          onClick={() => {
+            handleClose()
+            gapi.auth2.getAuthInstance().signOut()
+          }}
+        >
+          Logout
+        </MenuItem>
+      </Menu>
+    </div>
+  )
+}
 
 const Nav = () => {
   const user = useContext(UserContext)
@@ -18,7 +75,7 @@ const Nav = () => {
         borderBottom: 'solid 1px #ccc',
       }}
     >
-      <Link to="/settings">
+      <Link to="/settings" style={{ lineHeight: 0 }}>
         <IconSettings color="black" size={32} />
       </Link>
 
@@ -28,27 +85,8 @@ const Nav = () => {
       >
         <Logo />
       </Link>
-      {/* <div style={{ flex: 1, textAlign: 'center', fontWeight: 'bold' }}>
-        Study Buddies
-      </div> */}
 
-      <div
-        style={{
-          width: 32,
-          height: 32,
-          borderRadius: '50%',
-          background: '#ccc',
-          overflow: 'hidden',
-        }}
-      >
-        {user && (
-          <img
-            style={{ width: '100%', height: '100%' }}
-            src={user.profilePicture}
-            alt={`profile for ${user.name}`}
-          />
-        )}
-      </div>
+      {user && <ProfileMenu user={user} />}
     </div>
   )
 }

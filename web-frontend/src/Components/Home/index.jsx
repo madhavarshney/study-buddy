@@ -5,7 +5,7 @@ import useSWR from 'swr'
 import fetcher from '../../utils/fetcher'
 import { UserContext } from '../../utils/contexts'
 import Shell from '../Shell'
-import MyImage from './engineering_team.png'
+import StockTeamImage from './engineering_team.png'
 
 const Home = ({ isConnected }) => {
   const navigate = useNavigate()
@@ -44,7 +44,13 @@ const Home = ({ isConnected }) => {
 
       {classes && (
         <div style={{ width: '100%' }}>
-          <img style={{ width: '400px', maxWidth: '100%' }} src={MyImage} />
+          <div style={{ width: '100%', maxWidth: '500px', margin: 'auto' }}>
+            <img
+              style={{ width: '100%' }}
+              alt="two people studying"
+              src={StockTeamImage}
+            />
+          </div>
 
           <h3>Choose Your Class</h3>
           <div style={{ gap: 16, display: 'flex', flexDirection: 'column' }}>

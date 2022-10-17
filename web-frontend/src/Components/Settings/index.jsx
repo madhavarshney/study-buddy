@@ -52,8 +52,10 @@ const Settings = () => {
         renderInput={(params) => (
           <TextField
             {...params}
+            style={{
+              backgroundColor: 'white',
+            }}
             variant="outlined"
-            // label="Multiple values"
             placeholder="Search for a class..."
           />
         )}

@@ -1,37 +1,31 @@
-import { Button } from '@mui/material'
-const ProfilePicutre = (props) => (
-  <div
-    style={{
-      width: '6rem',
-      height: '6rem',
-      borderRadius: '50%',
-      background: '#ccc',
-      overflow: 'hidden',
-    }}
-  >
-    {props.user && (
-      <img
-        style={{ width: '100%', height: '100%' }}
-        src={props.user.profilePicture}
-        alt={`profile for ${props.user.name}`}
-      />
-    )}
-  </div>
-)
-const MatchedCard = (props) => (
-  <div style={props.style}>
-    <ProfilePicutre {...props} />
-    <h2>{props.user.name}</h2>
-    <div style={{ paddingBottom: '10px' }}>{props.user.email}</div>
+import { Avatar, Button } from '@mui/material'
+
+const MatchedCard = ({
+  style,
+  user: { name, email, profilePicture },
+  handleAccept,
+  handleReject,
+}) => (
+  <div style={style}>
+    <Avatar
+      style={{ width: '96px', height: '96px' }}
+      src={profilePicture}
+      alt={name}
+      imgProps={{ referrerPolicy: 'no-referrer' }}
+    />
+
+    <h2 style={{ marginBottom: 0 }}>{name}</h2>
+    <div style={{ paddingBottom: '10px', marginBottom: '1rem' }}>{email}</div>
+
     <Button
       style={{ marginRight: '1rem' }}
       variant="contained"
       color="success"
-      onClick={props.handleAccept}
+      onClick={handleAccept}
     >
       Accept
     </Button>
-    <Button variant="outlined" color="error" onClick={props.handleReject}>
+    <Button variant="outlined" color="error" onClick={handleReject}>
       Reject
     </Button>
   </div>

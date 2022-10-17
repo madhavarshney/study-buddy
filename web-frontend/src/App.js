@@ -13,7 +13,6 @@ import SignUp from './Components/SignUp'
 import Settings from './Components/Settings'
 
 const socket = io()
-
 const theme = createTheme({
   typography: {
     fontFamily: [
@@ -62,8 +61,6 @@ function App() {
 
       const { user } = userData
 
-      console.log(user)
-
       setUserId(user.id)
       // navigate('/home')
     } catch {
@@ -81,14 +78,18 @@ function App() {
         scope: 'email profile',
       })
 
-      const user = gapi.auth2.getAuthInstance().currentUser.get()
+      gapi.auth2.getAuthInstance().isSignedIn.listen((signedIn) => {
+        if (signedIn) {
+          // TODO: this doesn't actually work on load
+          doLogin(gapi.auth2.getAuthInstance().currentUser.get().profileObj)
+        } else {
+          setUserId(null)
 
-      if (user.profileObj) {
-        // TODO: this doesn't actually work
-        doLogin(user.profileObj)
-      } else if (window.location.pathname !== '/') {
-        window.location.pathname = '/'
-      }
+          if (window.location.pathname !== '/') {
+            window.location.pathname = '/'
+          }
+        }
+      })
     })
 
     return () => {
@@ -105,13 +106,6 @@ function App() {
         <SocketContext.Provider value={socket}>
           <Router>
             <Routes>
-              {/* <Route exact path="/" element={<SignUp setUserId={setUserId} />} /> */}
-              {/* <Route
-                exact
-                path="/home"
-                element={<Home userId={userId} isConnected={isConnected} />}
-              /> */}
-
               <Route
                 exact
                 path="/"
