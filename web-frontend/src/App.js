@@ -78,11 +78,17 @@ function App() {
         scope: 'email profile',
       })
 
+      const user = gapi.auth2.getAuthInstance().currentUser.get()
+
+      if (user.profileObj) {
+        // TODO: this doesn't actually work
+        doLogin(user.profileObj)
+      } else if (window.location.pathname !== '/') {
+        window.location.pathname = '/'
+      }
+
       gapi.auth2.getAuthInstance().isSignedIn.listen((signedIn) => {
-        if (signedIn) {
-          // TODO: this doesn't actually work on load
-          doLogin(gapi.auth2.getAuthInstance().currentUser.get().profileObj)
-        } else {
+        if (!signedIn) {
           setUserId(null)
 
           if (window.location.pathname !== '/') {
